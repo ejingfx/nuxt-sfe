@@ -1,10 +1,16 @@
 <template functional>
-  <div v-if="color === 'light' || typeof color === 'undefined'">
-    Logo Default
-  </div>
-  <div v-else>
-    Logo Dark
-  </div>
+  <router-link to="/" class="logo">
+    <img
+      v-if="color === 'light' || typeof color === 'undefined'"
+      src="/images/logo-default.png"
+      alt=""
+    >
+    <img
+      v-else
+      src="/images/logo-dark.png"
+      alt=""
+    >
+  </router-link>
 </template>
 
 <script>
