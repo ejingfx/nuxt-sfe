@@ -1,0 +1,32 @@
+.section {
+  display: block;
+}
+
+.section__heading {
+  display: block;
+  width: 100%;
+}
+
+.section__title {
+  font-family: $montserrat;
+  font-size: 50px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 2;
+}
+
+.section__inner {
+  position: relative;
+}
+
+.section__content {
+  display: block;
+  width: 100%;
+}
+
+.section__footer {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+

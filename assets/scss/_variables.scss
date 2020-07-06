@@ -4,4 +4,17 @@ $color-white: #fff;
 
 $montserrat: 'Montserrat', sans-serif;
 
+//BREAKPOINTS
+$breakpoint-large-devices: 1200px;
+$breakpoint-desktop: 1024px;
+$breakpoint-tablet: 992px;
+$breakpoint-mobile: 767px;
+$breakpoint-small: 375px;
+$breakpoint-min: 320px;
+
+//ANIMATION
+$duration: .25s;
+$easing: ease-in-out;
+$delay: .35s;
+
 $zmax: 10;

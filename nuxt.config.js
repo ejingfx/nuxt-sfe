@@ -35,6 +35,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    '~/plugins/filters.js',
+    '~/plugins/mixins.js',
     '~/plugins/logger.js'
   ],
   /*
@@ -70,6 +72,6 @@ export default {
   },
 
   styleResources: {
-    scss: ['./assets/scss/*.scss']
+    scss: ['./assets/scss/style.scss']
   }
 }

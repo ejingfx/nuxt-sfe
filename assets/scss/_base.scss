@@ -6,6 +6,9 @@ body {
 
 ul, ol {
   list-style: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding: 0;
 }
 
 a {
