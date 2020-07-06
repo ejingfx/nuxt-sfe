@@ -3,7 +3,9 @@
     <Header />
 
     <main>
-      main
+      <div class="container">
+        main
+      </div>
     </main>
 
     <Footer />

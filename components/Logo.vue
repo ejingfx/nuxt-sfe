@@ -1,13 +1,13 @@
-<template functional>
+<template>
   <router-link to="/" class="logo">
     <img
-      v-if="color === 'light' || typeof color === 'undefined'"
-      src="/images/logo-default.png"
+      v-if="color === 'dark'"
+      src="/images/logo-dark.png"
       alt=""
     >
     <img
       v-else
-      src="/images/logo-dark.png"
+      src="/images/logo-default.png"
       alt=""
     >
   </router-link>
@@ -23,4 +23,12 @@ export default {
 
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.logo {
+  display: inline-block;
+  img {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+</style>
