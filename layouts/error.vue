@@ -1,13 +1,13 @@
 <template>
-  <section class="home">
+  <section class="not-found">
     <div class="container">
-      home
+      Not Found
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'NotFound'
 }
 </script>

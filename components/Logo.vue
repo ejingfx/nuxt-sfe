@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/" class="logo">
+  <nuxt-link to="/" class="logo">
     <img
       v-if="color === 'dark'"
       src="/images/logo-dark.png"
@@ -10,7 +10,7 @@
       src="/images/logo-default.png"
       alt=""
     >
-  </router-link>
+  </nuxt-link>
 </template>
 
 <script>

@@ -1,19 +1,22 @@
 <template>
-  <section class="new-post">
+  <section class="post">
     <div class="container">
-      NewPost
+      Post
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'NewPost'
+  name: 'Post',
+  validator ({ params }) {
+    return /^\d+$/.test(params.id)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.new-post {
+.post {
   display: block;
 }
 </style>
