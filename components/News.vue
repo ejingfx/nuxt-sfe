@@ -25,7 +25,7 @@
       </div>
 
       <div class="section__footer">
-        <Button text="LOAD MORE" />
+        <Button text="LOAD MORE" @click.native="$emit('loadMore')" />
       </div>
     </div>
   </section>
