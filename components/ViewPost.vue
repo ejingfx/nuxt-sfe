@@ -36,10 +36,6 @@
           </li>
         </ul>
       </div>
-
-      <div class="section__footer">
-        <CommentForm />
-      </div>
     </section>
   </div>
 </template>
@@ -47,13 +43,11 @@
 <script>
 import mixins from '../plugins/mixins'
 import Comment from '../components/Comment'
-import CommentForm from '../components/CommentForm'
 
 export default {
   name: 'ViewPost',
   components: {
-    Comment,
-    CommentForm
+    Comment
   },
   mixins: [mixins],
   props: {

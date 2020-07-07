@@ -30,6 +30,10 @@
         v-if="!edit"
         :post="getPost"
       />
+
+      <div class="post__comments">
+        <CommentForm />
+      </div>
     </div>
   </section>
 </template>
@@ -38,12 +42,14 @@
 import Button from '../components/Button'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ViewPost from '../components/ViewPost'
+import CommentForm from '../components/CommentForm'
 
 export default {
   name: 'Post',
   components: {
     Button,
     Breadcrumbs,
+    CommentForm,
     ViewPost
   },
   validate ({ params }) {
