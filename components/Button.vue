@@ -46,7 +46,18 @@ export default {
 .btn--basic {
   display: inline-block;
   background-color: transparent;
-  border: 0;
+  border-bottom: 1px solid $color-cod-gray;
+  min-width: unset;
+  padding: 0;
+  line-height: 1;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  .btn__text {
+    color: $color-cod-gray;
+  }
 }
 .btn--comment-submit {
   min-width: 210px;

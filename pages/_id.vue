@@ -2,20 +2,47 @@
   <section class="post">
     <Breadcrumbs :text="getPost.title" :url="`/${getPost.id}`" />
 
-    <ViewPost
-      v-if="edit"
-      :post="getPost"
-    />
+    <div class="container">
+      <div class="post__actions clearfix">
+        <div class="post__actions-list">
+          <Button
+            v-if="!edit"
+            modifier="btn--basic"
+            text="Edit Post"
+            @click.native="edit = true"
+          />
+          <Button
+            v-if="edit"
+            modifier="btn--basic"
+            text="Save Post"
+            @click.native="save($event)"
+          />
+          <Button
+            v-if="edit"
+            modifier="btn--basic"
+            text="Cancel"
+            @click.native="cancel($event)"
+          />
+        </div>
+      </div>
+
+      <ViewPost
+        v-if="!edit"
+        :post="getPost"
+      />
+    </div>
   </section>
 </template>
 
 <script>
+import Button from '../components/Button'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ViewPost from '../components/ViewPost'
 
 export default {
   name: 'Post',
   components: {
+    Button,
     Breadcrumbs,
     ViewPost
   },
@@ -24,22 +51,44 @@ export default {
   },
   data () {
     return {
-      edit: true,
+      edit: false,
       post: {
         title: 'サンプルテキストサンプル ルテキストサンプルテキ ストサンプルテキストサンプル ルテキスト ',
-        image: '',
+        image: 'https://picsum.photos/1000/1000',
         date: new Date(),
         content: `
           ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。
-          
           ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。
-        `
+        `,
+        comments: [
+          {
+            postId: 1,
+            content: 'ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。ここにはテキストが入ります。ここにはテキストが入りますここにはテキストが入りますここにはテキストが入りますここにはテキストが入ります。',
+            createdAt: new Date()
+          },
+          {
+            postId: 2,
+            content: 'new new new comment',
+            createdAt: new Date()
+          }
+        ]
       }
     }
   },
   computed: {
     getPost () { return this.post },
     getEdit () { return this.edit }
+  },
+  methods: {
+    cancel (e) {
+      const confirm = window.confirm('Are your sure you want cancel & discard changes?')
+      if (confirm) {
+        this.edit = false
+      }
+    },
+    save (e) {
+      this.$logger('save...')
+    }
   }
 }
 </script>
