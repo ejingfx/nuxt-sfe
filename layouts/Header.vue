@@ -6,19 +6,36 @@
       </div>
 
       <div class="header__right">
-        menu
+        <Button
+          text="LOGIN"
+          modifier="btn--borderless btn--basic"
+          @click.native="$emit('toggle', [$event, 'login'])"
+        />
+        <Button
+          text="LOGOUT"
+          modifier="btn--borderless btn--basic"
+          @click.native="$emit('toggle', [$event, 'logout'])"
+        />
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import Button from '../components/Button'
 import Logo from '../components/Logo'
 
 export default {
   name: 'AppHeader',
   components: {
+    Button,
     Logo
+  },
+  props: {
+    auth: {
+      type: Boolean,
+      default: null
+    }
   }
 }
 </script>

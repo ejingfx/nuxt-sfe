@@ -62,4 +62,7 @@ export default {
 .btn--comment-submit {
   min-width: 210px;
 }
+.btn--borderless {
+  border: 0;
+}
 </style>

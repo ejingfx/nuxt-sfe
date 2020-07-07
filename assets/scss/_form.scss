@@ -8,8 +8,35 @@
 .form__inner {
   position: relative;
 }
+.form__message {
+  font-family: $montserrat;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+
+  strong {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+}
 .form__action {
   float: right;
   padding-top: 40px;
   padding-bottom: 150px;
+}
+.form--login,
+.form--register {
+  .form__block {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+  .form__inner {
+    padding-top: 25px;
+    padding-bottom: 0;
+  }
+  .form__action {
+    float: none;
+    padding: 25px 0 0;
+    text-align: center;
+  }
 }
