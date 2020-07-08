@@ -2,7 +2,7 @@
   <form
     action="/"
     novalidate
-    class="form form--login"
+    class="form form--register"
     @submit.prevent="submit($event)"
   >
     <div class="form__inner">
@@ -23,8 +23,16 @@
       </div>
 
       <div class="form__block">
+        <Input
+          field="confirm"
+          type="password"
+          label="Confirm"
+        />
+      </div>
+
+      <div class="form__block">
         <Button
-          text="LOGIN"
+          text="REGISTER"
           modifier="btn--fluid"
           @click.native="submit($event)"
         />
@@ -33,7 +41,7 @@
 
     <div class="form__action">
       <p class="form__message">
-        No account yet? <strong @click="$emit('toggle')">REGISTER HERE</strong>
+        Already have an account? <strong @click="$emit('toggle')">LOGIN HERE</strong>
       </p>
     </div>
   </form>
@@ -44,7 +52,7 @@ import Button from './Button'
 import Input from './Input'
 
 export default {
-  name: 'LoginForm',
+  name: 'RegisterForm',
   components: {
     Button,
     Input

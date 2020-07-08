@@ -2,29 +2,29 @@
   <div class="app">
     <Header
       :auth="getAuth"
+      :show="getShowModal"
       @toggle="toggle($event)"
     />
-    <Modal
-      v-if="showModal && getModal === 'login'"
-    >
-      <h2
-        slot="title"
-        class="modal__title"
-      >
+    <Modal v-if="showModal && getModal === 'login'">
+      <h2 slot="title" class="modal__title">
         LOGIN
       </h2>
-      <LoginForm slot="content" />
+
+      <LoginForm
+        slot="content"
+        @toggle="toggle([$event, 'swap'])"
+      />
     </Modal>
 
-    <Modal
-      v-if="showModal && getModal === 'register'"
-    >
-      <h2
-        slot="title"
-        class="modal__title"
-      >
+    <Modal v-if="showModal && getModal === 'register'">
+      <h2 slot="title" class="modal__title">
         REGISTER
       </h2>
+
+      <RegisterForm
+        slot="content"
+        @toggle="toggle([$event, 'swap'])"
+      />
     </Modal>
 
     <main>
@@ -36,6 +36,7 @@
 
 <script>
 import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
 import Header from './Header'
 import Footer from './Footer'
 import Modal from './Modal'
@@ -46,11 +47,12 @@ export default {
     Header,
     Footer,
     Modal,
-    LoginForm
+    LoginForm,
+    RegisterForm
   },
   data () {
     return {
-      showModal: true,
+      showModal: false,
       modal: 'login',
       auth: false
     }
@@ -61,8 +63,6 @@ export default {
     getModal () { return this.modal }
   },
   methods: {
-    modalHandler (id) {
-    },
     toggle (e) {
       const target = e[1]
       switch (target) {
@@ -71,13 +71,21 @@ export default {
           this.showModal = !this.showModal
           break
         }
-        default: {
+        case 'register': {
           this.modal = 'register'
           this.showModal = !this.showModal
           break
         }
+        case 'swap': {
+          this.modal = this.getModal === 'login' ? 'register' : 'login'
+          break
+        }
+        default: {
+          this.modal = 'login'
+          this.showModal = !this.showModal
+          break
+        }
       }
-      this.$logger(target)
     }
   }
 }

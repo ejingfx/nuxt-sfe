@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section__heading">
         <h2 class="section__title">
-          News
+          NEWS
         </h2>
       </div>
       <div class="section__content">

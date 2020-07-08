@@ -7,14 +7,22 @@
 
       <div class="header__right">
         <Button
+          v-if="!auth && !show"
           text="LOGIN"
           modifier="btn--borderless btn--basic"
           @click.native="$emit('toggle', [$event, 'login'])"
         />
         <Button
+          v-else-if="auth && !show"
           text="LOGOUT"
           modifier="btn--borderless btn--basic"
           @click.native="$emit('toggle', [$event, 'logout'])"
+        />
+        <Button
+          v-if="show"
+          text="CLOSE"
+          modifier="btn--borderless btn--basic"
+          @click.native="$emit('toggle', [$event, 'close'])"
         />
       </div>
     </div>
@@ -33,6 +41,10 @@ export default {
   },
   props: {
     auth: {
+      type: Boolean,
+      default: null
+    },
+    show: {
       type: Boolean,
       default: null
     }
