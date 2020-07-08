@@ -40,4 +40,8 @@
 .post__actions-list {
   float: right;
   padding-top: 65px;
+
+  .btn:not(:last-child) {
+    margin-right: 42px;
+  }
 }

@@ -1,16 +1,13 @@
 <template>
-  <label
-    class="textarea"
-    :for="field"
+  <textarea
+    :id="field"
+    :name="field"
+    :placeholder="placeholder"
     :class="modifier"
-  >
-    <textarea
-      :id="field"
-      :name="field"
-      :placeholder="placeholder"
-      class="textarea__tag"
-    />
-  </label>
+    class="textarea"
+    :value="value"
+    @input="$emit('input', $event.target.value)"
+  />
 </template>
 
 <script>
@@ -26,6 +23,11 @@ export default {
       type: String,
       default: ''
     },
+    value: {
+      type: String,
+      default: '',
+      required: true
+    },
     placeholder: {
       type: String,
       default: ''
@@ -36,10 +38,6 @@ export default {
 
 <style lang="scss" scoped>
 .textarea {
-  display: block;
-  width: 100%;
-}
-.textarea__tag {
   display: block;
   width: 100%;
   font-family: $montserrat;
@@ -56,29 +54,49 @@ export default {
   resize: none;
 }
 .textarea--post-form {
-  .textarea__tag {
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 1.65;
-    letter-spacing: 0.1em;
-    min-height: 394px;
-  }
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.65;
+  letter-spacing: 0.1em;
+  min-height: 394px;
 }
 .textarea--comment-form {
-  .textarea__tag {
-    font-size: 19px;
-    font-weight: 300;
-    line-height: 1.65;
-    letter-spacing: 0.1em;
-    min-height: 200px;
-    padding: 40px;
-    color: $color-cod-gray;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: 0.1em;
+  min-height: 200px;
+  padding: 40px;
+  color: $color-cod-gray;
 
-    &::placeholder {
+  &::placeholder {
+    font-size: 18px;
+    font-style: italic;
+    color: transparentize($color-cod-gray, 0.5);
+  }
+}
+.textarea--create-post {
+  min-height: 394px;
+  padding: 18px 20px;
+
+  &::placeholder {
       font-size: 18px;
-      font-style: italic;
-      color: transparentize($color-cod-gray, 0.5);
+      font-weight: 300;
+      color: $color-cod-gray;
     }
+}
+
+.textarea--title {
+  font-size: 40px;
+  font-weight: 600;
+  min-height: 150px;
+  padding: 12px 20px;
+  line-height: 1.6;
+
+  &::placeholder {
+    font-size: 40px;
+    font-weight: 600;
+    color: transparentize($color-cod-gray, 0.5);
   }
 }
 </style>

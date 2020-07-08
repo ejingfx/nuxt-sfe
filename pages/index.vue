@@ -1,15 +1,18 @@
 <template>
   <div class="home">
-    <News />
+    <Hero />
+    <News :auth="true" />
   </div>
 </template>
 
 <script>
+import Hero from '../components/Hero'
 import News from '../components/News'
 
 export default {
-  name: 'Home',
+  name: 'Index',
   components: {
+    Hero,
     News
   }
 }

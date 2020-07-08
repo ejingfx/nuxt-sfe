@@ -1,7 +1,15 @@
 <template>
-  <section class="section">
+  <section class="section section--news">
     <div class="container">
-      <div class="section__heading">
+      <div class="section__heading clearfix">
+        <nuxt-link
+          v-if="auth"
+          to="/new"
+          class="section__link"
+        >
+          <span class="section__link-text">Create New Post</span>
+        </nuxt-link>
+
         <h2 class="section__title">
           NEWS
         </h2>
@@ -40,6 +48,12 @@ export default {
   components: {
     Button,
     CardPost
+  },
+  props: {
+    auth: {
+      type: Boolean,
+      default: null
+    }
   },
   data () {
     return {

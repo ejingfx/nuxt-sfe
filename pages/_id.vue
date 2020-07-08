@@ -1,41 +1,38 @@
 <template>
-  <section class="post">
+  <div class="post-detail">
     <Breadcrumbs :text="getPost.title" :url="`/${getPost.id}`" />
 
     <div class="container">
-      <div class="post__actions clearfix">
-        <div class="post__actions-list">
-          <Button
-            v-if="!edit"
-            modifier="btn--basic"
-            text="Edit Post"
-            @click.native="edit = true"
-          />
-          <Button
-            v-if="edit"
-            modifier="btn--basic"
-            text="Save Post"
-            @click.native="save($event)"
-          />
-          <Button
-            v-if="edit"
-            modifier="btn--basic"
-            text="Cancel"
-            @click.native="cancel($event)"
-          />
+      <ViewPost v-if="!edit" :post="getPost">
+        <div slot="actions" class="post__actions clearfix">
+          <div class="post__actions-list">
+            <Button
+              v-if="!edit"
+              modifier="btn--basic"
+              text="Edit Post"
+              @click.native="edit = true"
+            />
+            <Button
+              v-if="edit"
+              modifier="btn--basic"
+              text="Save Post"
+              @click.native="save($event)"
+            />
+            <Button
+              v-if="edit"
+              modifier="btn--basic"
+              text="Cancel"
+              @click.native="cancel($event)"
+            />
+          </div>
         </div>
-      </div>
+      </ViewPost>
 
-      <ViewPost
-        v-if="!edit"
-        :post="getPost"
-      />
-
-      <div class="post__comments">
+      <div class="post-detail__comments">
         <CommentForm />
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

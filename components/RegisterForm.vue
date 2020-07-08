@@ -26,7 +26,7 @@
         <Input
           field="confirm"
           type="password"
-          label="Confirm"
+          label="Confirm Password"
         />
       </div>
 

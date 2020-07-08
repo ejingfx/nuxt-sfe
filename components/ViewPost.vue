@@ -1,5 +1,7 @@
 <template>
-  <div class="view-post">
+  <article class="post">
+    <slot name="actions" />
+
     <time class="post__date" :datetime="post.date | format_datetime">{{ post.date | format_date }}</time>
 
     <h1 class="post__title">
@@ -37,7 +39,7 @@
         </ul>
       </div>
     </section>
-  </div>
+  </article>
 </template>
 
 <script>

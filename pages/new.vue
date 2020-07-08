@@ -1,14 +1,20 @@
 <template>
-  <section class="new-post">
-    <div class="container">
-      NewPost
-    </div>
-  </section>
+  <div class="new-post">
+    <Breadcrumbs text="Create New Post" />
+    <CreateForm />
+  </div>
 </template>
 
 <script>
+import Breadcrumbs from '../components/Breadcrumbs'
+import CreateForm from '../components/CreateForm'
+
 export default {
-  name: 'NewPost'
+  name: 'NewPost',
+  components: {
+    Breadcrumbs,
+    CreateForm
+  }
 }
 </script>
 
