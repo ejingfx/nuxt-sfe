@@ -1,6 +1,6 @@
 <template>
   <article class="card-post">
-    <nuxt-link :to="`/${post.id}`" class="card-post__link">
+    <nuxt-link :to="`/post/${post.id}`" class="card-post__link">
       <div class="card-post__inner">
         <div class="card-post__thumb">
           <div :style="showPlaceholder(post.image)" />

@@ -2,15 +2,34 @@
   <div class="hero">
     <div class="hero__inner">
       <div class="hero__content">
-        hero
+        <client-only>
+          {{ posts }}
+        </client-only>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { GET_PAGINATED_POSTS } from '../graphql'
 export default {
-  name: 'Hero'
+  name: 'Hero',
+  data () {
+    return {
+      posts: []
+    }
+  },
+  apollo: {
+    posts: {
+      query: GET_PAGINATED_POSTS,
+      variables: {
+        pagination: {
+          limit: 3,
+          offset: 0
+        }
+      }
+    }
+  }
 }
 </script>
 

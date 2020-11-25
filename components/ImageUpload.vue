@@ -3,16 +3,19 @@
     :for="field"
     class="image-upload"
   >
-    <div class="image__thumb">
-      <div />
-    </div>
+    <div
+      v-show="getImgData !== ''"
+      id="preview"
+      class="image-upload__thumb"
+    />
     <input
+      v-show="getImgData === ''"
       :id="field"
       :name="field"
       accept="image/*"
       type="file"
       class="image-upload__tag"
-      @change="$emit('change', $event)"
+      @change="preview($event)"
     >
     <div class="image-upload__btn">
       <span>UPLOAD IMAGE</span>
@@ -27,6 +30,35 @@ export default {
     field: {
       type: String,
       default: ''
+    }
+  },
+  data () {
+    return {
+      imgData: ''
+    }
+  },
+  computed: {
+    getImgData () { return this.imgData }
+  },
+  methods: {
+    setImgData (e, data) {
+      this.imgData = data
+      this.$emit('change', [e, data])
+    },
+    preview (e) {
+      const file = e.target.files[0]
+      const reader = new FileReader()
+      const preview = document.getElementById('preview')
+      const setImgData = this.setImgData
+
+      reader.addEventListener('load', function (e) {
+        preview.style.backgroundImage = `url(${reader.result})`
+        setImgData(e, reader.result)
+      }, false)
+
+      if (file) {
+        reader.readAsDataURL(file)
+      }
     }
   }
 }
@@ -67,7 +99,9 @@ export default {
 }
 .image-upload__thumb {
   position: relative;
-  border: 1px solid red;
+  padding-top: 42.85%;
+  background-position: center;
+  background-size: cover;
 
   div {
     position: relative;

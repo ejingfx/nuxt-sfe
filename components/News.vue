@@ -2,13 +2,15 @@
   <section class="section section--news">
     <div class="container">
       <div class="section__heading clearfix">
-        <nuxt-link
-          v-if="auth"
-          to="/new"
-          class="section__link"
-        >
-          <span class="section__link-text">Create New Post</span>
-        </nuxt-link>
+        <client-only>
+          <nuxt-link
+            v-if="user.isAuth"
+            to="/post/new"
+            class="section__link"
+          >
+            <span class="section__link-text">Create New Post</span>
+          </nuxt-link>
+        </client-only>
 
         <h2 class="section__title">
           NEWS
@@ -33,13 +35,15 @@
       </div>
 
       <div class="section__footer">
-        <Button text="LOAD MORE" @click.native="$emit('loadMore')" />
+        <Button text="LOAD MORE" @click.native="loadMore($event)" />
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { GET_PAGINATED_POSTS } from '../graphql'
 import Button from '../components/Button'
 import CardPost from '../components/CardPost'
 
@@ -49,48 +53,66 @@ export default {
     Button,
     CardPost
   },
-  props: {
-    auth: {
-      type: Boolean,
-      default: null
-    }
+  async fetch (init = false) {
+    await this.$apollo.query({
+      query: GET_PAGINATED_POSTS,
+      fetchPolicy: 'no-cache',
+      variables: {
+        pagination: this.getPagination
+      }
+    })
+      .then((response) => {
+        this.posts.push(...response.data.posts)
+        if (!init && response.data.posts.length < 6) {
+          this.max = true
+        }
+      })
   },
   data () {
     return {
-      posts: [
-        {
-          id: 1,
-          image: '',
-          title: 'サンプルテキストサンプル ルテキストサンプルテキストサンプルテキストサンプル ルテキスト',
-          content: 'lorem ipsum',
-          createdAt: new Date()
-        },
-        {
-          id: 2,
-          image: '',
-          title: 'サンプルテキストサンプル ルテキストサンプルテキストサンプルテキストサンプル ルテキスト',
-          content: 'lorem ipsum',
-          createdAt: new Date()
-        },
-        {
-          id: 3,
-          image: '',
-          title: 'サンプルテキストサンプル ルテキストサンプルテキストサンプルテキストサンプル ルテキスト',
-          content: 'lorem ipsum',
-          createdAt: new Date()
-        },
-        {
-          id: 4,
-          image: '',
-          title: 'サンプルテキストサンプル ルテキストサンプルテキストサンプルテキストサンプル ルテキスト',
-          content: 'lorem ipsum',
-          createdAt: new Date()
-        }
-      ]
+      max: false,
+      pagination: {
+        limit: 6,
+        offset: 3
+      },
+      posts: []
     }
   },
   computed: {
+    ...mapState(['user']),
+    getMax () { return this.max },
+    getPagination () { return this.pagination },
     getPosts () { return this.posts }
+  },
+  created () {
+    this.$logger(this.$fetch)
+  },
+  mounted () {
+    // this.fetch(true)
+  },
+  methods: {
+    loadMore (e) {
+      e.preventDefault()
+      if (!this.getMax) {
+        this.pagination.offset += 6
+        this.fetch()
+      }
+    },
+    async fetch (init = false) {
+      await this.$apollo.query({
+        query: GET_PAGINATED_POSTS,
+        fetchPolicy: 'no-cache',
+        variables: {
+          pagination: this.getPagination
+        }
+      })
+        .then((response) => {
+          this.posts.push(...response.data.posts)
+          if (!init && response.data.posts.length < 6) {
+            this.max = true
+          }
+        })
+    }
   }
 }
 </script>

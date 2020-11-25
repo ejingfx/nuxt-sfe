@@ -7,18 +7,24 @@
   >
     <div class="form__inner">
       <div class="form__block">
-        <Input
-          field="email"
+        <EmailInput
+          v-model="$v.form.email.$model"
+          :field="'email'"
+          :modifier="formModifier($v.form.email)"
           type="email"
           label="Email"
+          @blur="$v.form.email.$touch()"
         />
       </div>
 
       <div class="form__block">
-        <Input
-          field="password"
+        <PasswordInput
+          v-model="$v.form.password.$model"
+          :field="'password'"
+          :modifier="formModifier($v.form.password)"
           type="password"
           label="Password"
+          @blur="$v.form.password.$touch()"
         />
       </div>
 
@@ -40,6 +46,8 @@
 </template>
 
 <script>
+import { email, required } from 'vuelidate/lib/validators'
+import { AUTHENTICATE } from '../graphql'
 import Button from './Button'
 import Input from './Input'
 
@@ -47,11 +55,69 @@ export default {
   name: 'LoginForm',
   components: {
     Button,
-    Input
+    EmailInput: Input,
+    PasswordInput: Input
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
+    }
+  },
+  computed: {
+    getForm () { return this.form }
   },
   methods: {
+    formModifier (validation) {
+      if (validation.$error) {
+        return 'input--error'
+      } else if (validation.$dirty) {
+        return 'input--dirty'
+      }
+    },
+    setToken (token) {
+      const data = { isAuth: true, token }
+      if (process.browser) {
+        localStorage.setItem('nuxt-spa', JSON.stringify(data))
+        this.$store.commit('user/login', data)
+        this.$emit('close')
+      }
+    },
     submit (e) {
-      this.$logger('submit...')
+      event.preventDefault()
+
+      if (!this.$v.$invalid) {
+        this.$logger('submit...')
+        this.$apollo.mutate({
+          mutation: AUTHENTICATE,
+          variables: {
+            email: this.form.email,
+            password: this.form.password
+          }
+        })
+          .then((res) => {
+            this.$logger(res.data.authenticate !== '')
+            if (res.data.authenticate !== '') {
+              this.setToken(res.data.authenticate)
+            }
+          })
+          .catch((err) => {
+            this.$logger(err)
+          })
+      }
     }
   }
 }

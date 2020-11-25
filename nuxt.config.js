@@ -1,4 +1,3 @@
-
 export default {
   /*
   ** Nuxt rendering mode
@@ -37,7 +36,9 @@ export default {
   plugins: [
     '~/plugins/filters.js',
     '~/plugins/mixins.js',
-    '~/plugins/logger.js'
+    '~/plugins/logger.js',
+    '~/plugins/vuelidate.js',
+    '~/plugins/vue2filters.js'
   ],
   /*
   ** Auto import components
@@ -56,9 +57,15 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/apollo',
     '@nuxtjs/axios',
     '@nuxtjs/style-resources'
   ],
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

@@ -1,11 +1,12 @@
 <template>
   <div class="app">
     <Header
-      :auth="getAuth"
       :show="getShowModal"
       @toggle="toggle($event)"
     />
-    <Modal v-if="showModal && getModal === 'login'">
+    <Modal
+      v-if="showModal && getModal === 'login'"
+    >
       <h2 slot="title" class="modal__title">
         LOGIN
       </h2>
@@ -13,6 +14,7 @@
       <LoginForm
         slot="content"
         @toggle="toggle([$event, 'swap'])"
+        @close="showModal = false"
       />
     </Modal>
 
@@ -35,6 +37,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import Header from './Header'
@@ -53,22 +56,44 @@ export default {
   data () {
     return {
       showModal: false,
-      modal: 'login',
-      auth: false
+      modal: 'login'
     }
   },
   computed: {
+    ...mapState(['user']),
     getShowModal () { return this.showModal },
     getAuth () { return this.auth },
     getModal () { return this.modal }
   },
+  created () {
+    this.checkToken()
+  },
   methods: {
+    checkToken () {
+      if (process.browser && localStorage.getItem('nuxt-spa') !== null) {
+        const LS = JSON.parse(localStorage.getItem('nuxt-spa'))
+        this.$store.commit('user/login', LS)
+      } else if (process.browser && localStorage.getItem('nuxt-spa') === null) {
+        const data = { isAuth: false, token: '' }
+        localStorage.setItem('nuxt-spa', JSON.stringify(data))
+      }
+    },
     toggle (e) {
       const target = e[1]
       switch (target) {
         case 'login': {
           this.modal = 'login'
           this.showModal = !this.showModal
+          break
+        }
+        case 'logout': {
+          this.$logger('logout...')
+          this.showModal = false
+          this.$store.commit('user/logout')
+          if (process.browser) {
+            const data = { isAuth: false, token: '' }
+            localStorage.setItem('nuxt-spa', JSON.stringify(data))
+          }
           break
         }
         case 'register': {

@@ -7,13 +7,13 @@
 
       <div class="header__right">
         <Button
-          v-if="!auth && !show"
+          v-if="!user.isAuth && !show"
           text="LOGIN"
           modifier="btn--borderless btn--basic"
           @click.native="$emit('toggle', [$event, 'login'])"
         />
         <Button
-          v-else-if="auth && !show"
+          v-else-if="user.isAuth && !show"
           text="LOGOUT"
           modifier="btn--borderless btn--basic"
           @click.native="$emit('toggle', [$event, 'logout'])"
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Button from '../components/Button'
 import Logo from '../components/Logo'
 
@@ -40,14 +41,13 @@ export default {
     Logo
   },
   props: {
-    auth: {
-      type: Boolean,
-      default: null
-    },
     show: {
       type: Boolean,
       default: null
     }
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>

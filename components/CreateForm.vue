@@ -51,12 +51,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import _ from 'lodash'
+import { required } from 'vuelidate/lib/validators'
+import { ADD_POST } from '../graphql'
 import Textarea from './Textarea'
 import ImageUpload from './ImageUpload'
 
 export default {
-  name: 'CreatePostForm',
+  name: 'CreatePost',
   components: {
     ImageUpload,
     Textarea
@@ -71,15 +74,19 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     getForm () { return this.form }
   },
-  mounted () {
-    this.formData = new FormData()
+  validations: {
+    form: {
+      title: { required },
+      image: {},
+      content: {}
+    }
   },
   methods: {
     selectImage (e) {
-      const file = e.target.files[0]
-      this.$logger(file)
+      this.form.image = e[1]
     },
     cancel (e) {
       if (!_.isEmpty(this.getForm.title) || !_.isEmpty(this.getForm.content) || !_.isEmpty(this.getForm.image)) {
@@ -92,9 +99,30 @@ export default {
         this.$router.push({ name: 'index' })
       }
     },
-    submit (e) {
+    async submit (e) {
       e.preventDefault()
-      this.$logger('submit...')
+
+      if (!this.$v.form.$invalid) {
+        await this.$apollo.mutate({
+          mutation: ADD_POST,
+          variables: {
+            post: { ...this.getForm }
+          },
+          context: {
+            headers: {
+              authorization: this.user.token ? this.user.token : ''
+            }
+          }
+        })
+          .then((res) => {
+            this.$logger(res)
+            const params = { params: { id: res.data.addPost.id } }
+            this.$router.push({ name: 'post-id', ...params })
+          })
+          .catch((err) => {
+            this.$logger(err)
+          })
+      }
     }
   }
 }

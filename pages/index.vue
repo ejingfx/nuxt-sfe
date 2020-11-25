@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Hero />
-    <News :auth="true" />
+    <News />
   </div>
 </template>
 
