@@ -20,7 +20,7 @@
     "apollo-link-http": "^1.5.17",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "nuxt": "^2.13.0",
     "vue2-filters": "^0.11.0",
